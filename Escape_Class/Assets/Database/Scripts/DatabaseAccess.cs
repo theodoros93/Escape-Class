@@ -7,50 +7,16 @@ using UnityEngine;
 
 public class DatabaseAccess : MonoBehaviour
 {
-    MongoClient client = new MongoClient("mongodb+srv://dbUser:ZhdhD1Q5Nyf6sd57@seriouscluster0.oygtk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
-    IMongoDatabase database;
-    IMongoCollection<BsonDocument> collection;
+    public MongoClient client = new MongoClient("mongodb+srv://dbUser:ZhdhD1Q5Nyf6sd57@seriouscluster0.oygtk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
+    public IMongoDatabase database;
+    public IMongoCollection<BsonDocument> collection;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        //var client = new MongoClient("mongodb+srv://dbUser:ZhdhD1Q5Nyf6sd57@seriouscluster0.oygtk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
-        database = client.GetDatabase("escape_class");
-        collection = database.GetCollection<BsonDocument>("users");
-
-        String myString = "hello";
-        String myString2 = "hello 2";
-        var document = new BsonDocument
-{
-        { "name", myString },
-        { "type", myString2 },
-        { "count", 1 },
-        { "info", new BsonDocument
-            {
-                { "x", 203 },
-                { "y", 102 }
-            }}
-        };
-
-
-        var filter = Builders<BsonDocument>.Filter.Gt("count", 50);
-        var cursor = collection.Find(filter).ToCursor();
-        foreach (var document1 in cursor.ToEnumerable())
-        {
-            
-            Debug.Log(document1);
-            //var jss = new JavaScriptSerializer();
-            //dynamic d = jss.DeserializeObject((string)document1);
-            //Console.WriteLine(d[0]["name"]);
-           // Debug.Log(d[0]["name"]);
-        }
-        //collection.InsertOne(document);
-        // await collection.InsertOneAsync(document);
-        // GetScoresFromDatabase();
-
-
+        var newgame = new StartUserGame();
+        newgame.StartGame();
     }
-
-
 
     public async void SaveScoreToDatabase(string userName, int score)
     {
@@ -75,6 +41,30 @@ public class DatabaseAccess : MonoBehaviour
     {
         var highScore = new HighScore();
         return highScore;
+    }
+
+    private void CreateUser()
+    {
+        database = client.GetDatabase("escape_class");
+        collection = database.GetCollection<BsonDocument>("users");
+
+        String name = "Thrasivoulos";
+        String lastname = "Tsiatsos";
+        String username = "ttsiatsos";
+        String password = "ttsiatsos";
+        ObjectId classId = new ObjectId("60c5d45d8f159c9c8587e5ce") ;
+        ObjectId categoryId = new ObjectId("60c5d4ce8f159c9c8587e5d0") ;
+
+        var document = new BsonDocument
+        {
+            { "name", name },
+            { "lastname", lastname },
+            { "username", username },
+            { "password", password},
+            { "classId",classId },
+            { "categoryId",categoryId }
+        };
+        collection.InsertOne(document);
     }
 
     // inline class

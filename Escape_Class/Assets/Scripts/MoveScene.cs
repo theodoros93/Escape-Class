@@ -17,7 +17,7 @@ public class MoveScene : MonoBehaviour
             //Button Press
             if(Input.GetKeyDown(KeyCode.E))
             {
-                SceneManager.LoadScene(SampleScene);
+                SceneManager.LoadScene("Stage02");
             }
         }
     }

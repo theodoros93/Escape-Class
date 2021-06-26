@@ -11,7 +11,6 @@ public class PauseMenu : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape)) {
-            Debug.Log("UpdateCalled!");
             if (gameIsPaused) {
                 Resume();
             } else {
@@ -21,14 +20,12 @@ public class PauseMenu : MonoBehaviour
     }
 
     public void Resume() {
-        Debug.Log("ResumeCalled!");
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         gameIsPaused = false;
     }
 
     void Pause() {
-        Debug.Log("PauseCalled!");
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         gameIsPaused = true;

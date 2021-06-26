@@ -16,6 +16,13 @@ public class DatabaseAccess : MonoBehaviour
     {
         var newgame = new StartUserGame();
         newgame.StartGame();
+
+        var authenticateNow = new AuthenticateUser();
+        authenticateNow.Authenticate("emaznis", "emaznis");
+        var miniGames = new MiniGames();
+        miniGames.GetMiniGames(new ObjectId("60c5e98c8f159c9c8587e5dc"), "easy");
+
+        
     }
 
     public async void SaveScoreToDatabase(string userName, int score)

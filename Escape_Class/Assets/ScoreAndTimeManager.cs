@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static MiniGames;
 
 public class ScoreAndTimeManager : MonoBehaviour
 {
@@ -10,13 +11,19 @@ public class ScoreAndTimeManager : MonoBehaviour
     public Text timeText;
     public int score;
     private float startTime;
+    public static List<MiniGame> miniGamesList;
 
     void Start()
     {
-        var miniGames = new MiniGames();
-        miniGames.GetMiniGames(new ObjectId("60c5e98c8f159c9c8587e5dc"), 3, "easy");
+        LoadMiniGames("60c5e98c8f159c9c8587e5dc", 3, "easy");
         score = 0;
         startTime = Time.time;
+    }
+
+    async void LoadMiniGames(string lessonCode, int chapter, string level)
+    {
+        var miniGames = new MiniGames();
+        miniGamesList = await miniGames.GetMiniGames(new ObjectId(lessonCode), chapter, level);
     }
 
     // Update is called once per frame
@@ -29,5 +36,10 @@ public class ScoreAndTimeManager : MonoBehaviour
 
         scoreTxt.text = score.ToString();
         timeText.text = minutes + ":" + seconds;
+    }
+
+    public static MiniGame getMiniGame(int gameId)
+    {
+        return miniGamesList[gameId];
     }
 }

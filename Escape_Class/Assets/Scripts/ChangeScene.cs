@@ -7,6 +7,7 @@ public class ChangeScene : MonoBehaviour
 {
 
     [SerializeField] private GameObject uiElement;
+    [SerializeField] private GameObject uiQuizPopup;
     [System.Obsolete]
     
     bool colliding;
@@ -36,7 +37,9 @@ public class ChangeScene : MonoBehaviour
         //}
         if (colliding && Input.GetKeyDown(KeyCode.E))
         {
-            Application.LoadLevel("Stage02");
+            //Application.LoadLevel("Stage02");
+            uiQuizPopup.SetActive(true);
+            Time.timeScale = 0;
         }
     }
 }

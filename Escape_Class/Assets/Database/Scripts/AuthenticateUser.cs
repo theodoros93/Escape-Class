@@ -41,6 +41,7 @@ public class AuthenticateUser : DatabaseAccess
         }
         else
         toReturn.found = true;
+        toReturn.id = results[0].GetValue("id").ToInt32();
         if (results[0].GetValue("categoryId") == "60c5d4ce8f159c9c8587e5d0")
         {
             toReturn.role = "Teacher";
@@ -62,6 +63,7 @@ public class AuthenticateUser : DatabaseAccess
         //public string id { get; set; }
         public bool found { get; set; }
         public string role { get; set; }
+        public int id { get; set; }
 
     }
 

@@ -23,6 +23,9 @@ public class DatabaseAccess : MonoBehaviour
         var miniGames = new MiniGames();
         miniGames.GetMiniGames(new ObjectId("60c5e98c8f159c9c8587e5dc"), 1, "easy");
 
+        var connectUserToGame = new ConnectUserToGame();
+        connectUserToGame.SaveFinishedGame(2, new ObjectId("60c61ead8f159c9c8587e5de"), 450, 1000, 3);
+
         
     }
 

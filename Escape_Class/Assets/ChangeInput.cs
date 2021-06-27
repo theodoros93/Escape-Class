@@ -24,9 +24,6 @@ public class ChangeInput : MonoBehaviour
             if (next != null) {
                 next.Select();
             }
-        } else if (Input.GetKeyDown(KeyCode.Return)) {
-            submitButton.onClick.Invoke();
-            Debug.Log("Login!");
         }
     }
 }

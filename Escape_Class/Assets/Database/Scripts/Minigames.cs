@@ -21,7 +21,7 @@ public class MiniGames : DatabaseAccess
     {
     }
 
-    public async Task<List<MiniGame>> GetMiniGames(ObjectId subjectId, string level)
+    public async Task<List<MiniGame>> GetMiniGames(ObjectId subjectId, int chapter, string level)
     {
         database = client.GetDatabase("escape_class");
         collection = database.GetCollection<BsonDocument>("minigame");
@@ -34,7 +34,7 @@ public class MiniGames : DatabaseAccess
         Debug.Log("all mini games" + miniGamesAwaited);
         List<MiniGame> miniGames = new List<MiniGame>();
         foreach(var miniGame in miniGamesAwaited.ToList()){
-            miniGames.Add(Deserialize(miniGame.ToString()));
+            miniGames.Add(Deserialize(miniGame));
             
 
         }
@@ -43,30 +43,18 @@ public class MiniGames : DatabaseAccess
     }
 
     // string manipulation function
-    private MiniGame Deserialize(string rawJson)
-    // raw json format: "{ \"_id\" : ObjectId(\"60d72a7a32c6b13d4db993b8\"), \"lectureId\" : ObjectId(\"60c5e98c8f159c9c8587e5dc\"), \"question\" : \"Για να κινηθεί ένα αυτοκίνητο, έχουμε μετατροπή ενέργειας...\", \"a\" : \"από κινητική σε χημική\", \"b\" : \"από χημική σε κινητική\", \"c\" : \"από θερμική/θερμότητα σε κινητική\", \"d\" : \"από χημική σε θερμική/θερμότητα\", \"answer\" : \"b\", \"level\" : \"easy\" }"
+    private MiniGame Deserialize(BsonDocument miniGameDocument)
+    // raw Document format: "{ \"_id\" : ObjectId(\"60d72a7a32c6b13d4db993b8\"), \"lectureId\" : ObjectId(\"60c5e98c8f159c9c8587e5dc\"), \"question\" : \"Για να κινηθεί ένα αυτοκίνητο, έχουμε μετατροπή ενέργειας...\", \"a\" : \"από κινητική σε χημική\", \"b\" : \"από χημική σε κινητική\", \"c\" : \"από θερμική/θερμότητα σε κινητική\", \"d\" : \"από χημική σε θερμική/θερμότητα\", \"answer\" : \"b\", \"level\" : \"easy\" }"
     {
-        Debug.Log("the raw json: "+rawJson);
         var miniGame = new MiniGame();
-        Debug.Log("TEST 1");
-        dynamic data= JObject.Parse(rawJson);
-        Debug.Log("TEST 2");
-        miniGame.level = data.level;
-        miniGame.question = data.question;
-        Debug.Log("QUESTION: " + miniGame.question);
-        Debug.Log("QUESTION: " + data.question);
-        miniGame.a = data.a;
-        miniGame.b = data.b;
-        miniGame.c = data.c;
-        miniGame.d = data.d;
-        miniGame.answer = data.answer;
+        miniGame.a = miniGameDocument.GetValue("a").AsString;
+        miniGame.b = miniGameDocument.GetValue("b").AsString;
+        miniGame.c = miniGameDocument.GetValue("c").AsString;
+        miniGame.d = miniGameDocument.GetValue("d").AsString;
+        miniGame.level = miniGameDocument.GetValue("level").AsString;
+        miniGame.question = miniGameDocument.GetValue("question").AsString;
+        miniGame.answer = miniGameDocument.GetValue("answer").AsString;
 
-        //var dyn = JsonConvert.DeserializeObject<dynamic>(rawJson);
-        //miniGame.question = dyn.task.question.Value;
-        //Debug.Log("QUESTION: " + miniGame.question);
-
-        //var stringWithoutID = rawJson.Substring(rawJson.IndexOf(")," + 4));
-        //var lectureId = stringWithoutID.Substring(0, stringWithoutID.IndexOf(":") - 2);
         return miniGame;
     }
 

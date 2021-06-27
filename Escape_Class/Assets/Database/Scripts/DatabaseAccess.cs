@@ -19,8 +19,9 @@ public class DatabaseAccess : MonoBehaviour
 
         var authenticateNow = new AuthenticateUser();
         authenticateNow.Authenticate("emaznis", "emaznis");
+
         var miniGames = new MiniGames();
-        miniGames.GetMiniGames(new ObjectId("60c5e98c8f159c9c8587e5dc"), "easy");
+        miniGames.GetMiniGames(new ObjectId("60c5e98c8f159c9c8587e5dc"), 1, "easy");
 
         
     }

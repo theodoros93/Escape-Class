@@ -18,7 +18,7 @@ public class AuthenticateUser : DatabaseAccess
     {
     }
 
-    public async Task<bool> Authenticate(string username, string password)
+    public async Task<ReturnAuthenticate> Authenticate(string username, string password)
     {
         database = client.GetDatabase("escape_class");
         collection = database.GetCollection<BsonDocument>("users");
@@ -30,25 +30,38 @@ public class AuthenticateUser : DatabaseAccess
 
         var results = await collection.Find(filter).ToListAsync();
         Debug.Log("Result COUNT: " + results.Count);
-        Debug.Log("Results: " + results);
+
+        var toReturn = new ReturnAuthenticate();
+
         if (results.Count == 0)
         {
-            return false;
+            toReturn.found = false;
+            toReturn.role = null; 
+            return toReturn;
         }
-        else return true;
-        //var authenticateAwaited = await authenticateTask;
+        else
+        toReturn.found = true;
+        if (results[0].GetValue("categoryId") == "60c5d4ce8f159c9c8587e5d0")
+        {
+            toReturn.role = "Teacher";
+            Debug.Log("Role: " + toReturn.role);
+            return toReturn;
+        }
+        else
+        {
+            toReturn.role = "Student";
+            Debug.Log("Role: " + toReturn.role);
+            return toReturn;
+        }
 
+    }
 
-        //var authenticatedString = authenticateAwaited.ToString();
-        // Debug.Log("String ="+authenticatedString);
-        //bool isEmpty = !authenticatedString.;
-        //IsBsonNull
-        //if (!authenticateAwaited)
-       // {
-            //return true;
-       // }
-      //  else return false;
-        
+    // The return type of Authenticate
+    public class ReturnAuthenticate
+    {
+        //public string id { get; set; }
+        public bool found { get; set; }
+        public string role { get; set; }
 
     }
 

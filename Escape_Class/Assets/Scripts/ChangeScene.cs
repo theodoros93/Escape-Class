@@ -137,6 +137,10 @@ public class ChangeScene : MonoBehaviour
             scoreAndTimeManager.GetComponent<ScoreAndTimeManager>().AddScore(scoreToAdd);
             scoreAndTimeManager.GetComponent<ScoreAndTimeManager>().correctAnswers++;
             uiQuizPopup.SetActive(false);
+            var triggerId = GameObject.Find("trigger_"+questionId+1).GetComponent<ChangeScene>().questionId+1;
+            Debug.Log("trigger_" + triggerId);
+           // GameObject.Find("trigger_"+triggerId).GetComponent<BoxCollider>().enabled = false;
+            
 
             if (scoreAndTimeManager.GetComponent<ScoreAndTimeManager>().correctAnswers == 8)
             {
@@ -165,6 +169,7 @@ public class ChangeScene : MonoBehaviour
             {
                 scoreAndTimeManager.GetComponent<ScoreAndTimeManager>().currentRoom = 2;
                 GameObject.Find("Ch12").GetComponent<CapsuleCollider>().enabled = false;
+                GameObject.Find("trigger_4").GetComponent<BoxCollider>().enabled = false;
                 scoreAndTimeManager.GetComponent<ScoreAndTimeManager>().LoadMiniGames("60c5e90d8f159c9c8587e5d9", 1, "hard");
             }
         }

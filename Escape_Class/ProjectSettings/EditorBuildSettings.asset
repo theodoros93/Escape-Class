@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Login page.unity
+    guid: 403638d433dfc44ab8d2353007a243d1
+  - enabled: 1
     path: Assets/Scenes/Start page.unity
     guid: c9e70c5b07fbe9448ac2875322a5b9fe
   - enabled: 1
@@ -20,4 +23,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Statistics.unity
     guid: e8ba9cc8867bf4994b338314252a8ab5
+  - enabled: 1
+    path: Assets/Scenes/Teacher/Teacher Start Page.unity
+    guid: bc86a5cad156e4799967a3856de88cc6
+  - enabled: 1
+    path: Assets/Scenes/Teacher/Create Game.unity
+    guid: 7dd18e2261b314b3681be133dcf8664b
   m_configObjects: {}

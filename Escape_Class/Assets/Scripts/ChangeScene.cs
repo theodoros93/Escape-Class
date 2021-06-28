@@ -12,6 +12,7 @@ public class ChangeScene : MonoBehaviour
     [SerializeField] private GameObject uiElement;
     [SerializeField] private GameObject uiQuizPopup;
     [SerializeField] private GameObject finalResultsPopup;
+    [SerializeField] private GameObject CM_FreeLook1;
     [SerializeField] private int questionId;
     Text question;
     Text answer1;
@@ -63,7 +64,9 @@ public class ChangeScene : MonoBehaviour
             {
                 uiQuizPopup.SetActive(true);
                 LoadQuestion();
-                Time.timeScale = 0;
+                GameObject.Find("Player").GetComponent<AgentMovement>().movementSpeed = 0;
+                CM_FreeLook1.SetActive(false);
+                //Time.timeScale = 0;
             }
             //Application.LoadLevel("Stage02");
             
@@ -132,15 +135,17 @@ public class ChangeScene : MonoBehaviour
 
         if (currentSelectedGameObject.GetComponentInChildren<Text>().text.ToString() == GameObject.Find("correct_answer").GetComponent<Text>().text)
         {
+
             var scoreAndTimeManager = GameObject.Find("ScoreAndTime");
             var scoreToAdd = GameObject.Find("question_level").GetComponent<Text>().text == "easy" ? 100 : 150;
             scoreAndTimeManager.GetComponent<ScoreAndTimeManager>().AddScore(scoreToAdd);
             scoreAndTimeManager.GetComponent<ScoreAndTimeManager>().correctAnswers++;
             uiQuizPopup.SetActive(false);
-            var triggerId = GameObject.Find("trigger_"+questionId+1).GetComponent<ChangeScene>().questionId+1;
-            Debug.Log("trigger_" + triggerId);
-           // GameObject.Find("trigger_"+triggerId).GetComponent<BoxCollider>().enabled = false;
-            
+            CM_FreeLook1.SetActive(true);
+            //var triggerId = GameObject.Find("trigger_"+questionId+1).GetComponent<ChangeScene>().questionId+1;
+            //Debug.Log("trigger_" + triggerId);
+            // GameObject.Find("trigger_"+triggerId).GetComponent<BoxCollider>().enabled = false;
+
 
             if (scoreAndTimeManager.GetComponent<ScoreAndTimeManager>().correctAnswers == 8)
             {
@@ -161,7 +166,7 @@ public class ChangeScene : MonoBehaviour
             }
             else
             {
-                Time.timeScale = 1;
+                GameObject.Find("Player").GetComponent<AgentMovement>().movementSpeed = 15;
             }
 
             if (scoreAndTimeManager.GetComponent<ScoreAndTimeManager>().currentRoom == 1 &&
@@ -170,7 +175,15 @@ public class ChangeScene : MonoBehaviour
                 scoreAndTimeManager.GetComponent<ScoreAndTimeManager>().currentRoom = 2;
                 GameObject.Find("Ch12").GetComponent<CapsuleCollider>().enabled = false;
                 GameObject.Find("trigger_4").GetComponent<BoxCollider>().enabled = false;
-                scoreAndTimeManager.GetComponent<ScoreAndTimeManager>().LoadMiniGames("60c5e90d8f159c9c8587e5d9", 1, "hard");
+
+                if (scoreAndTimeManager.GetComponent<ScoreAndTimeManager>().mistakes == 0)
+                {
+                    scoreAndTimeManager.GetComponent<ScoreAndTimeManager>().LoadMiniGames("60c5e90d8f159c9c8587e5d9", 1, "hard");
+                }
+                else
+                {
+                    scoreAndTimeManager.GetComponent<ScoreAndTimeManager>().LoadMiniGames("60c5e90d8f159c9c8587e5d9", 1, "easy");
+                }
             }
         }
         else

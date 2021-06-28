@@ -137,8 +137,8 @@ public class ChangeScene : MonoBehaviour
             scoreAndTimeManager.GetComponent<ScoreAndTimeManager>().AddScore(scoreToAdd);
             scoreAndTimeManager.GetComponent<ScoreAndTimeManager>().correctAnswers++;
             uiQuizPopup.SetActive(false);
-            var triggerId = GameObject.Find("trigger_"+questionId+1).GetComponent<ChangeScene>().questionId+1;
-            Debug.Log("trigger_" + triggerId);
+            //var triggerId = GameObject.Find("trigger_"+questionId+1).GetComponent<ChangeScene>().questionId+1;
+            //Debug.Log("trigger_" + triggerId);
            // GameObject.Find("trigger_"+triggerId).GetComponent<BoxCollider>().enabled = false;
             
 
